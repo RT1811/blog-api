@@ -2,6 +2,7 @@
 
 ## Project Structure
 
+```text
 blog-api/
 ├── server/
 │   ├── prisma/
@@ -58,7 +59,7 @@ Post
 Comment
 - Author
 - Post
-
+```
 ## MVP Roadmap
 
 1. Authentication
