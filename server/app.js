@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import authRouter from "./routes/auth.js"
+import postsRouter from "./routes/posts.js";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors({
 }));
 
 app.use("/api/auth", authRouter);
+app.use("/api/posts", postsRouter);
 
 app.get("/api", (req, res) => {
     res.json({ message: "API is running" });
