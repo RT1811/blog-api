@@ -36,18 +36,9 @@ export async function signUp(req, res, next) {
             },
         });
 
-        const token = jwt.sign(
-            { userId: user.id },
-            process.env.JWT_SECRET,
-            { expiresIn: "1h" }
-        );
-
-        res.status(201).json({
-            token,
-            user : {
-                id: user.id,
-                username: user.username,
-            }
+        res.status(200).json({
+            id: user.id,
+            username: user.username,
         });
     } catch (err) {
         next(err);
@@ -78,11 +69,45 @@ export async function logIn(req, res, next) {
             });
         }
 
-        res.status(201).json({
-            id: user.id,
-            username: user.username,
+        const token = jwt.sign(
+            { userId: user.id },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+
+        res.status(200).json({
+            token,
+            user: {
+                id: user.id,
+                username: user.username,
+            },
         });
     } catch(err) {
+        next(err);
+    }
+}
+
+export async function getMe(req, res, next) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: req.userId,
+            },
+            select: {
+                id: true,
+                username: true,
+                createdAt: true,
+            },
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                error: "User not found",
+            });
+        }
+
+        res.status(200).json(user);
+    } catch (err) {
         next(err);
     }
 }
