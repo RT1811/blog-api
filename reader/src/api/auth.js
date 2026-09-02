@@ -35,3 +35,19 @@ export async function logIn(username, password) {
 
     return data;
 }
+
+export async function getMe(token) {
+    const response = await fetch("http://localhost:3000/api/auth/me", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || "Failed to get user");
+    }
+
+    return data;
+}

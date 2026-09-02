@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { logIn } from "../api/auth.js";
+import { AuthContext } from "../context/AuthContext.jsx";
 
 function Login() {
     const[username, setUsername] = useState("");
     const[password, setPassword] = useState("");
     const[error, setError] = useState("");
+
+    const { setUser } = useContext(AuthContext);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -14,7 +17,7 @@ function Login() {
 
             localStorage.setItem("token", data.token);
 
-            console.log(data.user);
+            setUser(data.user);
         } catch(err) {
             setError(err.message);
         }
