@@ -64,7 +64,7 @@ export async function logIn(req, res, next) {
             },
         });
 
-        if (!match) {
+        if (!user) {
             return res.status(401).json({
                 error: "Invalid username or password",
             });
