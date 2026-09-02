@@ -1,6 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { getMe } from "../api/auth.js";
 
+function logOut() {
+    localStorage.removeItem("token");
+    setUser(null);
+}
+
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
@@ -31,7 +36,7 @@ export function AuthProvider({ children }) {
     }, []);
 
      return (
-        <AuthContext.Provider value={{ user, setUser, loading }}>
+        <AuthContext.Provider value={{ user, setUser, loading, logOut }}>
             {children}
         </AuthContext.Provider>
     );
