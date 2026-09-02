@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import authRouter from "./routes/auth.js"
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.use(cors({
         "http://localhost:5174",
     ],
 }));
+
+app.use("/api/auth", authRouter);
 
 app.get("/api", (req, res) => {
     res.json({ message: "API is running" });
