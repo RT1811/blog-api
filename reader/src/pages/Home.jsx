@@ -10,7 +10,9 @@ export default function Home() {
     useEffect(() => {
         async function loadPosts() {
             try {
-                const data = getPublishedPosts();
+                const data = await getPublishedPosts();
+                console.log(data);
+                console.log(Array.isArray(data));
                 setPosts(data);
             } catch (err) {
                 setError(err.message);

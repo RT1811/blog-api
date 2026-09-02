@@ -1,16 +1,18 @@
 import { createContext, useEffect, useState } from "react";
 import { getMe } from "../api/auth.js";
 
-function logOut() {
-    localStorage.removeItem("token");
-    setUser(null);
-}
+
 
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    function logOut() {
+        localStorage.removeItem("token");
+        setUser(null);
+    }
 
     useEffect(() => {
         async function checkAuth() {
