@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import { signUp } from "../controllers/auth.js";
+import { signUp, logIn } from "../controllers/auth.js";
 
 const router = Router();
 
-const signUpValidation = [
+const authValidation = [
     body("username")
         .trim()
         .notEmpty()
@@ -15,6 +15,7 @@ const signUpValidation = [
         .withMessage("Password must be at least 6 characters"),
 ];
 
-router.post("/signup", signUpValidation, signUp);
+router.post("/signup", authValidation, signUp);
+router.post('/login', authValidation, logIn);
 
 export default router;
