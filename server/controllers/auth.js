@@ -36,7 +36,7 @@ export async function signUp(req, res, next) {
             },
         });
 
-        res.status(200).json({
+        res.status(201).json({
             id: user.id,
             username: user.username,
         });
@@ -46,6 +46,14 @@ export async function signUp(req, res, next) {
 }
 
 export async function logIn(req, res, next) {
+     const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array(),
+        });
+    }
+
     const { username, password } = req.body;
 
     try {
