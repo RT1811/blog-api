@@ -11,3 +11,15 @@ export async function getPublishedPosts() {
 
     return data;
 }
+
+export async function getPublishedPost(id) {
+    const response = await fetch(`http://localhost:3000/api/posts/${id}`);
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || "Failed to fetch post");
+    }
+
+    return data;
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPublishedPosts } from "../api/posts.js";
+import { Link } from "react-router-dom";
 
 export default function Home() {
     const [posts, setPosts] = useState([]);
@@ -33,7 +34,11 @@ export default function Home() {
         <main>
             {posts.map((post) => (
                 <article key={post.id}>
-                    <h2>{post.title}</h2>
+                    <h2>
+                        <Link to={`/posts/${post.id}`}>
+                            {post.title}
+                        </Link>
+                    </h2>
                     <p>{post.content}</p>
 
                     <p>
