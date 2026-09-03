@@ -23,3 +23,17 @@ export async function getPublishedPost(id) {
 
     return data;
 }
+
+export async function getPostComments(postId) {
+    const response = await fetch(
+        `http://localhost:3000/api/posts/${postId}/comments`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || "Failed to fetch comments");
+    }
+
+    return data;
+}
