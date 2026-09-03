@@ -59,3 +59,42 @@ export async function createComment(postId, content, token) {
 
     return data;
 }
+
+export async function updateComment(commentId, content, token) {
+    const response = await fetch(
+        `http://localhost:3000/api/comments/${commentId}`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ content }),
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || "Failed to update comment");
+    }
+
+    return data;
+}
+
+export async function deleteComment(commentId, token) {
+    const response = await fetch(
+        `http://localhost:3000/api/comments/${commentId}`,
+        {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to delete comment");
+    }
+}

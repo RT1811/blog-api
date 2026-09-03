@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { createComment, getPostComments, getPublishedPost } from "../api/posts";
+import { createComment, getPostComments, getPublishedPost, updateComment, deleteComment } from "../api/posts";
 import { AuthContext } from "../context/AuthContext.jsx";
 
 export default function Post() {
@@ -11,6 +11,8 @@ export default function Post() {
     const [error, setError] = useState("");
     const [comments, setComments] = useState([]);
     const [commentContent, setCommentContent] = useState("");
+    const [editingCommentId, setEditingCommentId] = useState(null);
+    const [editContent, setEditContent] = useState("");
 
     useEffect(() => {
         async function loadPost() {
@@ -51,6 +53,50 @@ export default function Post() {
         }
     }
 
+    async function handleDeleteComment(commentId) {
+        const token = localStorage.getItem("token");
+
+        try {
+            await deleteComment(commentId, token);
+
+            setComments((previousComments) => 
+                previousComments.filter(
+                    (comment) => comment.id !== commentId
+                )
+            );
+        } catch(err) {
+            setError(err.message);
+        }
+    }
+
+    async function handleEditComment(e, commentId) {
+        e.preventDefault();
+
+        const token = localStorage.getItem("token");
+
+        try {
+            const updatedComment = await updateComment(commentId, editContent, token);
+
+            setComments((previousComments) =>
+                previousComments.map((comment) =>
+                    comment.id === commentId
+                        ? updatedComment
+                        : comment
+                )
+            );
+
+            setEditingCommentId(null);
+            setEditContent("");
+        } catch(err) {
+            setError(err.message);
+        }
+    }
+
+    function startEditing(comment) {
+        setEditingCommentId(comment.id);
+        setEditContent(comment.content);
+    }
+
     if (error) {
     return <p>{error}</p>;
     }
@@ -59,7 +105,7 @@ export default function Post() {
         return <p>Loading...</p>;
     }
 
-     return (
+    return (
         <main>
             <h1>{post.title}</h1>
             <p>{post.content}</p>
@@ -70,9 +116,62 @@ export default function Post() {
 
                 {comments.map((comment) => (
                     <article key={comment.id}>
-                        <p>{comment.content}</p>
+                        {editingCommentId === comment.id ? (
+                            <form
+                                onSubmit={(e) =>
+                                    handleEditComment(e, comment.id)
+                                }
+                            >
+                                <textarea
+                                    value={editContent}
+                                    onChange={(e) =>
+                                        setEditContent(e.target.value)
+                                    }
+                                />
+
+                                <button type="submit">
+                                    Save
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setEditingCommentId(null)
+                                    }
+                                >
+                                    Cancel
+                                </button>
+                            </form>
+                        ) : (
+                            <p>{comment.content}</p>
+                        )}
+
                         <p>By {comment.author.username}</p>
-                        {comment.isUpdated && <span>Edited</span>}
+
+                        {comment.isUpdated && (
+                            <span>Edited</span>
+                        )}
+
+                        {comment.author.id === user?.id &&
+                            editingCommentId !== comment.id && (
+                                <>
+                                    <button
+                                        onClick={() =>
+                                            startEditing(comment)
+                                        }
+                                    >
+                                        Edit
+                                    </button>
+
+                                    <button
+                                        onClick={() =>
+                                            handleDeleteComment(comment.id)
+                                        }
+                                    >
+                                        Delete
+                                    </button>
+                                </>
+                            )}
                     </article>
                 ))}
 
@@ -80,10 +179,14 @@ export default function Post() {
                     <form onSubmit={handleCommentSubmit}>
                         <textarea
                             value={commentContent}
-                            onChange={(e) => setCommentContent(e.target.value)}
+                            onChange={(e) =>
+                                setCommentContent(e.target.value)
+                            }
                         />
 
-                        <button type="submit">Comment</button>
+                        <button type="submit">
+                            Comment
+                        </button>
                     </form>
                 )}
             </section>
