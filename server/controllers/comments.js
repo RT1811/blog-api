@@ -175,3 +175,52 @@ export async function updateComment(req, res, next) {
         next(err);
     }
 }
+
+export async function deleteComment(req, res, next) {
+    const commentId = Number(req.params.id);
+
+    try {
+        const comment = await prisma.comment.findUnique({
+            where: {
+                id: commentId,
+            },
+            select: {
+                id: true,
+                authorId: true,
+                post: {
+                    select: {
+                        published: true,
+                    },
+                },
+            },
+        });
+
+        if (!comment) {
+            return res.status(404).json({
+                error: "Comment not found",
+            });
+        }
+
+        if (!comment.post.published) {
+            return res.status(404).json({
+                error: "Post not found",
+            });
+        }
+
+        if (comment.authorId !== req.userId) {
+            return res.status(403).json({
+                error: "You cannot delete this comment",
+            });
+        }
+
+        await prisma.comment.delete({
+            where: {
+                id: comment.id,
+            },
+        });
+
+        res.status(204).send();
+    } catch (err) {
+        next(err);
+    }
+}
