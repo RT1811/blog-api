@@ -136,15 +136,15 @@ export async function updateComment(req, res, next) {
             });
         }
 
-        if (comment.authorId !== req.userId) {
-            return res.status(403).json({
-                error: "You cannot edit this comment",
-            });
-        }
-
         if (!comment.post.published) {
             return res.status(404).json({
                 error: "Post not found",
+            });
+        }
+
+        if (comment.authorId !== req.userId) {
+            return res.status(403).json({
+                error: "You cannot edit this comment",
             });
         }
 

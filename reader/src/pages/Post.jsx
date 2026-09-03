@@ -13,6 +13,8 @@ export default function Post() {
     const [commentContent, setCommentContent] = useState("");
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editContent, setEditContent] = useState("");
+    const [loadError, setLoadError] = useState("");
+    const [commentError, setCommentError] = useState("");
 
     useEffect(() => {
         async function loadPost() {

@@ -11,8 +11,6 @@ export default function Home() {
         async function loadPosts() {
             try {
                 const data = await getPublishedPosts();
-                console.log(data);
-                console.log(Array.isArray(data));
                 setPosts(data);
             } catch (err) {
                 setError(err.message);

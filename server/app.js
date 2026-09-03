@@ -20,8 +20,12 @@ app.use("/api/auth", authRouter);
 app.use("/api/posts", postsRouter);
 app.use("/api", commentsRouter);
 
-app.get("/api", (req, res) => {
-    res.json({ message: "API is running" });
+app.use((err, req, res, next) => {
+    console.error(err);
+
+    res.status(500).json({
+        error: "Internal server error",
+    });
 });
 
 const PORT = process.env.PORT || 3000;
