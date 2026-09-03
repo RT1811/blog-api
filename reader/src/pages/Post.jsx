@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { getPostComments, getPublishedPost } from "../api/posts";
+import { createComment, getPostComments, getPublishedPost } from "../api/posts";
+import { AuthContext } from "../context/AuthContext.jsx";
 
 export default function Post() {
     const { id } = useParams();
+    const { user } = useContext(AuthContext);
 
     const [post, setPost] = useState(null);
     const [error, setError] = useState("");
     const [comments, setComments] = useState([]);
+    const [commentContent, setCommentContent] = useState("");
 
     useEffect(() => {
         async function loadPost() {
@@ -25,9 +28,32 @@ export default function Post() {
         loadPost();
     }, [id]);
 
+    async function handleCommentSubmit(e) {
+        e.preventDefault();
+
+        const token = localStorage.getItem("token");
+
+        try {
+            const newComment = await createComment(
+                id,
+                commentContent,
+                token,
+            );
+
+            setComments((previousComments) => [
+                ...previousComments,
+                newComment,
+            ]);
+
+            setCommentContent("");
+        } catch(err) {
+            setError(err.message);
+        }
+    }
+
     if (error) {
     return <p>{error}</p>;
-}
+    }
 
     if (!post) {
         return <p>Loading...</p>;
@@ -44,11 +70,22 @@ export default function Post() {
 
                 {comments.map((comment) => (
                     <article key={comment.id}>
-                        <p>{comment.context}</p>
+                        <p>{comment.content}</p>
                         <p>By {comment.author.username}</p>
                         {comment.isUpdated && <span>Edited</span>}
                     </article>
                 ))}
+
+                {user && (
+                    <form onSubmit={handleCommentSubmit}>
+                        <textarea
+                            value={commentContent}
+                            onChange={(e) => setCommentContent(e.target.value)}
+                        />
+
+                        <button type="submit">Comment</button>
+                    </form>
+                )}
             </section>
         </main>
     );

@@ -37,3 +37,25 @@ export async function getPostComments(postId) {
 
     return data;
 }
+
+export async function createComment(postId, content, token) {
+    const response = await fetch(
+        `http://localhost:3000/api/posts/${postId}/comments`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ content }),
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || "Failed to create comment");
+    }
+
+    return data;
+}
