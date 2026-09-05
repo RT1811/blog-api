@@ -4,6 +4,7 @@ import cors from "cors";
 import authRouter from "./routes/auth.js"
 import postsRouter from "./routes/posts.js";
 import commentsRouter from "./routes/comments.js";
+import meRouter from "./routes/me.js"
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cors({
 }));
 
 app.use("/api/auth", authRouter);
+app.use("/api/me", meRouter);
 app.use("/api/posts", postsRouter);
 app.use("/api", commentsRouter);
 

@@ -61,3 +61,28 @@ export async function getPublishedPostById(req, res, next) {
         next(err);
     }
 }
+
+export async function getMyPosts(req, res, next) {
+    try {
+        const posts = await prisma.posts.findMany({
+            where: {
+                authorId: req.userId,
+            },
+            orderBy: {
+                updatedAt: "desc",
+            },
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                published: true,
+                publishedAt: true,
+                updatedAt: true,
+            },
+        });
+
+        res.status(200).json(posts);
+    } catch (err) {
+        next(err);
+    }
+}
