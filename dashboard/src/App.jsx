@@ -4,10 +4,12 @@ import MyPosts from "./pages/MyPosts.jsx";
 import NewPost from "./pages/NewPost.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import EditPost from "./pages/EditPost.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 function App() {
     return (
         <BrowserRouter>
+        <Navbar />
             <Routes>
                 <Route path="/" element={
                   <ProtectedRoute>
