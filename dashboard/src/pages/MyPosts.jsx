@@ -1,6 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getMyPosts } from "../api/posts.js"
+import { AuthContext } from "../context/AuthContext.jsx";
+import { deleteAccount } from "../api/auth.js";
 
 export default function Myposts() {
     const { setUser } = useContext(AuthContext);
