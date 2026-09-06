@@ -64,7 +64,7 @@ export async function getPublishedPostById(req, res, next) {
 
 export async function getMyPosts(req, res, next) {
     try {
-        const posts = await prisma.posts.findMany({
+        const posts = await prisma.post.findMany({
             where: {
                 authorId: req.userId,
             },
