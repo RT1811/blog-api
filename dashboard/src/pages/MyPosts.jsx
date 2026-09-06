@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { getMyPosts } from "../api/posts.js"
 
 export default function Myposts() {
+    const { setUser } = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
@@ -32,9 +35,24 @@ export default function Myposts() {
         return <p>{error}</p>;
     }
 
+    async function handleDeleteAccount() {
+        const token = localStorage.getItem("token");
+
+        try {
+            await deleteAccount(token);
+
+            localStorage.removeItem("token");
+            setUser(null);
+            navigate("/login");
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
     return (
         <main>
             <h1>My Posts</h1>
+            <button onClick={handleDeleteAccount}>Delete Account</button>
 
             <Link to="/posts/new">New Post</Link>
 
@@ -51,6 +69,7 @@ export default function Myposts() {
                     <Link to={`/posts/${post.id}/edit`}>Edit</Link>
                 </article>
             ))}
+            
         </main>
     );
 }

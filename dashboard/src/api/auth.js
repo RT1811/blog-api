@@ -34,3 +34,17 @@ export async function logIn(username, password) {
 
     return data;
 }
+
+export async function deleteAccount(token) {
+    const response = await fetch("http://localhost:3000/api/me", {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to delete account");
+    }
+}

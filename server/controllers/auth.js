@@ -119,3 +119,17 @@ export async function getMe(req, res, next) {
         next(err);
     }
 }
+
+export async function deleteAccount(req, res, next) {
+    try {
+        await prisma.user.delete({
+            where: {
+                id: req.userId,
+            },
+        });
+
+        res.status(204).send();
+    } catch (err) {
+        next(err);
+    }
+}
