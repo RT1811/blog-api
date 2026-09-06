@@ -133,6 +133,7 @@ export async function getMyPostById(req, res, next) {
                 id: true,
                 title: true,
                 content: true,
+                published: true,
                 publishedAt: true,
                 author: {
                     select: {
@@ -157,7 +158,7 @@ export async function getMyPostById(req, res, next) {
 
 export async function updatePost(req, res, next) {
     const postId = Number(req.params.id);
-    const { title, content } = req.body;
+    const { title, content, published } = req.body;
 
     const errors = validationResult(req);
 
@@ -174,6 +175,7 @@ export async function updatePost(req, res, next) {
             },
             select: {
                 id: true,
+                publishedAt: true,
                 authorId: true,
             },
         });
@@ -190,14 +192,29 @@ export async function updatePost(req, res, next) {
             });
         }
 
+        const data = {};
+
+        if (title !== undefined) {
+            data.title = title;
+        }
+
+        if (content !== undefined) {
+            data.content = content;
+        }
+
+        if (published !== undefined) {
+            data.published = published;
+
+            if (published && !post.publishedAt) {
+                data.publishedAt = new Date();
+            }
+        }
+
         const updatedPost = await prisma.post.update({
             where: {
                 id: postId,
             },
-            data: {
-                title,
-                content,
-            },
+            data,
             select: {
                 id: true,
                 title: true,

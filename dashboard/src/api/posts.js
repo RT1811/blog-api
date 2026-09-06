@@ -55,7 +55,7 @@ export async function getMyPost(id, token) {
     return data;
 }
 
-export async function updatePost(id, title, content, token) {
+export async function updatePost(id, updates, token) {
     const response = await fetch(
         `http://localhost:3000/api/posts/${id}`,
         {
@@ -64,7 +64,7 @@ export async function updatePost(id, title, content, token) {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ title, content }),
+            body: JSON.stringify(updates),
         }
     );
 

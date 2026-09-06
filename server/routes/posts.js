@@ -5,7 +5,7 @@ import { body } from "express-validator";
 
 const router = Router();
 
-const postValidation = [
+const createPostValidation = [
     body("title")
         .trim()
         .notEmpty()
@@ -17,12 +17,31 @@ const postValidation = [
         .withMessage("Content is required"),
 ];
 
+const updatePostValidation = [
+    body("title")
+        .optional()
+        .trim()
+        .notEmpty()
+        .withMessage("Title cannot be empty"),
+
+    body("content")
+        .optional()
+        .trim()
+        .notEmpty()
+        .withMessage("Content cannot be empty"),
+
+    body("published")
+        .optional()
+        .isBoolean()
+        .withMessage("Published must be a boolean"),
+];
+
 router.get("/", getPublishedPosts);
 
 router.get("/:id", getPublishedPostById);
 
-router.post("/", authenticate, postValidation, createPost);
+router.post("/", authenticate, createPostValidation, createPost);
 
-router.patch("/:id", authenticate, postValidation, updatePost);
+router.patch("/:id", authenticate, updatePostValidation, updatePost);
 
 export default router;

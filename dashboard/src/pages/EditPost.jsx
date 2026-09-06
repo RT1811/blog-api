@@ -10,6 +10,7 @@ export default function EditPost() {
     const [content, setContent] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [published, setPublished] = useState(false);
 
     useEffect(() => {
         async function loadPost() {
@@ -20,6 +21,7 @@ export default function EditPost() {
 
                 setTitle(post.title);
                 setContent(post.content);
+                setPublished(post.published);
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -36,8 +38,20 @@ export default function EditPost() {
         const token = localStorage.getItem("token");
 
         try {
-            await updatePost(id, title, content, token);
+            await updatePost(id, { title, content }, token);
             navigate("/");
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
+    async function handlePublishToggle() {
+        const token  = localStorage.getItem("token");
+
+        try {
+            const updatedPost = await updatePost(id, { published: !published }, token);
+
+            setPublished(updatedPost.published);
         } catch (err) {
             setError(err.message);
         }
@@ -64,6 +78,7 @@ export default function EditPost() {
             />
 
             <button type="submit">Save Changes</button>
+            <button type="button" onClick={handlePublishToggle}>{published ? "Unpublish" : "Publish"}</button>
         </form>
     );
 }
