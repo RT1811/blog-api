@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMyPost, updatePost } from "../api/posts.js";
+import { getMyPost, updatePost, deletePost } from "../api/posts.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditPost() {
