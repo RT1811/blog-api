@@ -13,3 +13,25 @@ export async function getMyPosts(token) {
 
     return data;
 }
+
+export async function createPost(title, content, token) {
+    const response = await fetch("http://localhost:3000/api/posts", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            title,
+            content,
+        }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || "Failed to create post");
+    }
+
+    return data;
+}

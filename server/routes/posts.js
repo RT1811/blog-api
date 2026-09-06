@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getPublishedPosts, getPublishedPostById, createPost } from "../controllers/posts.js";
 import { authenticate } from "../middleware/authentication.js";
+import { body } from "express-validator";
 
 const router = Router();
 

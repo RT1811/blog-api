@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import MyPosts from "./pages/MyPosts.jsx";
+import NewPost from "./pages/NewPost.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function App() {
@@ -11,6 +12,11 @@ function App() {
                   <ProtectedRoute>
                     <MyPosts />
                   </ProtectedRoute>
+                } />
+                <Route path="/posts/new" element={
+                    <ProtectedRoute>
+                      <NewPost />
+                    </ProtectedRoute>
                 } />
                 <Route path="/login" element={<Login />} />
             </Routes>

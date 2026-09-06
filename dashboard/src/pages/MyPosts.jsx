@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getMyPosts } from "../api/posts.js"
 
 export default function Myposts() {
@@ -34,6 +35,8 @@ export default function Myposts() {
     return (
         <main>
             <h1>My Posts</h1>
+
+            <Link to="/posts/new">New Post</Link>
 
             {posts.map((post) => (
                 <article key={post.id}>
