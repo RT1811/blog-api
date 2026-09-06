@@ -31,21 +31,26 @@ export default function Home() {
     }
 
     return (
-        <main>
-            {posts.map((post) => (
-                <article key={post.id}>
-                    <h2>
-                        <Link to={`/posts/${post.id}`}>
-                            {post.title}
-                        </Link>
-                    </h2>
-                    <p>{post.content}</p>
+        <main className="home-page">
+            <h1>Latest Posts</h1>
 
-                    <p>
-                        By {post.author?.username ?? "Deleted User"}
-                    </p>
-                </article>
-            ))}
+            <div className="post-list">
+                {posts.map((post) => (
+                    <article className="post-card" key={post.id}>
+                        <h2>
+                            <Link to={`/posts/${post.id}`}>
+                                {post.title}
+                            </Link>
+                        </h2>
+
+                        <p className="post-meta">
+                            By {post.author?.username ?? "Deleted User"}
+                        </p>
+
+                        <p>{post.content}</p>
+                    </article>
+                ))}
+            </div>
         </main>
     );
 }

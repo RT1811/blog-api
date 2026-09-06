@@ -27,24 +27,26 @@ function Login() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-            />
+        <main className="auth-page">
+            <form onSubmit={handleSubmit}>
+                <input
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Username"
+                />
 
-            <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-            />
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                />
 
-            <button type="submit">Log in</button>
+                <button type="submit">Log in</button>
 
-            {error && <p>{error}</p>}
-        </form>
+                {error && <p>{error}</p>}
+            </form>
+        </main>
     );
 }
 

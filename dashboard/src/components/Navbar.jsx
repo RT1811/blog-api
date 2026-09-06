@@ -16,7 +16,7 @@ export default function Navbar() {
     }
 
     return (
-        <nav>
+        <nav className="navbar">
             <Link to="/">My Posts</Link>
             <Link to="/posts/new">New Post</Link>
 

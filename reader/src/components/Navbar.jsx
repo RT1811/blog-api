@@ -12,7 +12,7 @@ export default function Navbar() {
     }
 
     return (
-        <nav>
+        <nav className="navbar">
             <Link to="/">Home</Link>
 
             {user ? (

@@ -108,82 +108,33 @@ export default function Post() {
     }
 
     return (
-        <main>
-            <h1>{post.title}</h1>
-            <p>{post.content}</p>
-            <p>By {post.author?.username ?? "Deleted User"}</p>
+        <main className="post-page">
+            <article className="post-full">
+                <h1>{post.title}</h1>
 
-            <section>
+                <p className="post-meta">
+                    By {post.author?.username ?? "Deleted User"}
+                </p>
+
+                <p className="post-content">
+                    {post.content}
+                </p>
+            </article>
+
+            <section className="comments-section">
                 <h2>Comments</h2>
 
-                {comments.map((comment) => (
-                    <article key={comment.id}>
-                        {editingCommentId === comment.id ? (
-                            <form
-                                onSubmit={(e) =>
-                                    handleEditComment(e, comment.id)
-                                }
-                            >
-                                <textarea
-                                    value={editContent}
-                                    onChange={(e) =>
-                                        setEditContent(e.target.value)
-                                    }
-                                />
-
-                                <button type="submit">
-                                    Save
-                                </button>
-
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        setEditingCommentId(null)
-                                    }
-                                >
-                                    Cancel
-                                </button>
-                            </form>
-                        ) : (
-                            <p>{comment.content}</p>
-                        )}
-
-                        <p>By {comment.author.username}</p>
-
-                        {comment.isUpdated && (
-                            <span>Edited</span>
-                        )}
-
-                        {comment.author.id === user?.id &&
-                            editingCommentId !== comment.id && (
-                                <>
-                                    <button
-                                        onClick={() =>
-                                            startEditing(comment)
-                                        }
-                                    >
-                                        Edit
-                                    </button>
-
-                                    <button
-                                        onClick={() =>
-                                            handleDeleteComment(comment.id)
-                                        }
-                                    >
-                                        Delete
-                                    </button>
-                                </>
-                            )}
-                    </article>
-                ))}
-
                 {user && (
-                    <form onSubmit={handleCommentSubmit}>
+                    <form
+                        className="comment-form"
+                        onSubmit={handleCommentSubmit}
+                    >
                         <textarea
                             value={commentContent}
                             onChange={(e) =>
                                 setCommentContent(e.target.value)
                             }
+                            placeholder="Write a comment..."
                         />
 
                         <button type="submit">
@@ -191,6 +142,79 @@ export default function Post() {
                         </button>
                     </form>
                 )}
+
+                <div className="comment-list">
+                    {comments.map((comment) => (
+                        <article
+                            className="comment-card"
+                            key={comment.id}
+                        >
+                            {editingCommentId === comment.id ? (
+                                <form
+                                    className="comment-edit-form"
+                                    onSubmit={(e) =>
+                                        handleEditComment(e, comment.id)
+                                    }
+                                >
+                                    <textarea
+                                        value={editContent}
+                                        onChange={(e) =>
+                                            setEditContent(e.target.value)
+                                        }
+                                    />
+
+                                    <div className="comment-actions">
+                                        <button type="submit">
+                                            Save
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setEditingCommentId(null)
+                                            }
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            ) : (
+                                <p className="comment-content">
+                                    {comment.content}
+                                </p>
+                            )}
+
+                            <p className="comment-meta">
+                                By {comment.author.username}
+
+                                {comment.isUpdated && (
+                                    <span> · Edited</span>
+                                )}
+                            </p>
+
+                            {comment.author.id === user?.id &&
+                                editingCommentId !== comment.id && (
+                                    <div className="comment-actions">
+                                        <button
+                                            onClick={() =>
+                                                startEditing(comment)
+                                            }
+                                        >
+                                            Edit
+                                        </button>
+
+                                        <button
+                                            onClick={() =>
+                                                handleDeleteComment(comment.id)
+                                            }
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                )}
+                        </article>
+                    ))}
+                </div>
             </section>
         </main>
     );

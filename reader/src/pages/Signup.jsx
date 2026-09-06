@@ -21,24 +21,26 @@ function Signup() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-            />
+        <main className="auth-page">
+            <form className="auth-form" onSubmit={handleSubmit}>
+                <input
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Username"
+                />
 
-            <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-            />
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                />
 
-            <button type="submit">Sign up</button>
+                <button type="submit">Sign up</button>
 
-            {error && <p>{error}</p>}
-        </form>
+                {error && <p>{error}</p>}
+            </form>
+        </main>
     );
 }
 
