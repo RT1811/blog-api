@@ -88,9 +88,14 @@ export default function EditPost() {
                 onChange={(e) => setContent(e.target.value)}
             />
 
-            <button type="submit">Save Changes</button>
-            <button type="button" onClick={handlePublishToggle}>{published ? "Unpublish" : "Publish"}</button>
-            <button type="button" onClick={handleDelete}>Delete Post</button>
+            <div className="editor-actions">
+                <button type="submit">Save Changes</button>
+                <button type="button" onClick={handlePublishToggle}>{published ? "Unpublish" : "Publish"}</button>
+            </div>
+
+            <div className="editor-danger">
+                <button type="button" onClick={handleDelete}>Delete Post</button>
+            </div>
         </form>
     );
 }

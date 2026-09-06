@@ -52,26 +52,58 @@ export default function Myposts() {
     }
 
     return (
-        <main>
-            <h1>My Posts</h1>
-            <button onClick={handleDeleteAccount}>Delete Account</button>
+        <main className="dashboard-page">
+            <div className="dashboard-header">
+                <div>
+                    <h1>My Posts</h1>
+                    <p>Manage your drafts and published posts.</p>
+                </div>
 
-            <Link to="/posts/new">New Post</Link>
+                <Link className="primary-link" to="/posts/new">
+                    New Post
+                </Link>
+            </div>
 
-            {posts.map((post) => (
-                <article key={post.id}>
-                    <h2>{post.title}</h2>
+            <div className="dashboard-post-list">
+                {posts.map((post) => (
+                    <article className="dashboard-post-card" key={post.id}>
+                        <div className="post-card-header">
+                            <h2>{post.title}</h2>
 
-                    <p>
-                        {post.published ? "Published" : "Draft"}
-                    </p>
+                            <span
+                                className={
+                                    post.published
+                                        ? "status-badge published"
+                                        : "status-badge draft"
+                                }
+                            >
+                                {post.published ? "Published" : "Draft"}
+                            </span>
+                        </div>
 
-                    <p>{post.content}</p>
+                        <p>{post.content}</p>
 
-                    <Link to={`/posts/${post.id}/edit`}>Edit</Link>
-                </article>
-            ))}
-            
+                        <Link
+                            className="edit-link"
+                            to={`/posts/${post.id}/edit`}
+                        >
+                            Edit
+                        </Link>
+                    </article>
+                ))}
+            </div>
+
+            <section className="danger-zone">
+                <h2>Danger Zone</h2>
+                <p>Deleting your account cannot be undone.</p>
+
+                <button
+                    className="danger-button"
+                    onClick={handleDeleteAccount}
+                >
+                    Delete Account
+                </button>
+            </section>
         </main>
     );
 }

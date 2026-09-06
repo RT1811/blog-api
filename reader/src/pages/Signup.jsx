@@ -23,6 +23,7 @@ function Signup() {
     return (
         <main className="auth-page">
             <form className="auth-form" onSubmit={handleSubmit}>
+                <h1>Sign Up</h1>
                 <input
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}

@@ -23,26 +23,28 @@ export default function NewPost() {
     }
 
     return (
-        <main>
-            <h1>New Post</h1>
+        <main className="editor-page">
+            <form className="editor-form" onSubmit={handleSubmit}>
+                <h1>New Post</h1>
 
-            <form onSubmit={handleSubmit}>
+                <label htmlFor="title">Title</label>
                 <input
+                    id="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Title"
                 />
 
+                <label htmlFor="content">Content</label>
                 <textarea
+                    id="content"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    placeholder="Write your post..."
                 />
 
-                <button type="submit">Save Draft</button>
+                <div className="editor-actions">
+                    <button type="submit">Save Draft</button>
+                </div>
             </form>
-
-            {error && <p>{error}</p>}
         </main>
     );
 }

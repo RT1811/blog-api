@@ -28,7 +28,8 @@ function Login() {
 
     return (
         <main className="auth-page">
-            <form onSubmit={handleSubmit}>
+            <form className="auth-form" onSubmit={handleSubmit}>
+                <h1>Log In</h1>
                 <input
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}

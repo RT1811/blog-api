@@ -27,24 +27,17 @@ function Login() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-            />
+        <main className="auth-page">
+            <form className="auth-form" onSubmit={handleSubmit}>
+                <h1>Dashboard Login</h1>
 
-            <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-            />
+                {/* keep your existing labels/inputs/error handling */}
 
-            <button type="submit">Log in</button>
-
-            {error && <p>{error}</p>}
-        </form>
+                <button type="submit">
+                    Log In
+                </button>
+            </form>
+        </main>
     );
 }
 
