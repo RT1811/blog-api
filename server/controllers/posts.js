@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import { prisma } from "../lib/prisma.js"
 
 export async function getPublishedPosts(req, res, next) {
@@ -83,6 +84,40 @@ export async function getMyPosts(req, res, next) {
 
         res.status(200).json(posts);
     } catch (err) {
+        next(err);
+    }
+}
+
+export async function createPost(req, res, next) {
+    const { title, content } = req.body;
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array(),
+        });
+    }
+
+    try {
+        const post = await prisma.post.create({
+            data: {
+                title,
+                content,
+                authorId: req.userId,
+            },
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                published: true,
+                publishedAt: true,
+                updatedAt: true,
+            },
+        });
+
+        res.status(201).json(post);
+    } catch(err) {
         next(err);
     }
 }
