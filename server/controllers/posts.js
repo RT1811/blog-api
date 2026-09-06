@@ -230,3 +230,41 @@ export async function updatePost(req, res, next) {
         next(err);
     }
 }
+
+export async function deletePost(req, res, next) {
+    const postId = Number(req.params.id);
+
+    try {
+        const post = await prisma.post.findUnique({
+            where: {
+                id: postId,
+            },
+            select: {
+                id: true,
+                authorId: true,
+            },
+        });
+
+        if (!post) {
+            return res.status(404).json({
+                error: "Post not found",
+            });
+        }
+
+        if (post.authorId !== req.userId) {
+            return res.status(403).json({
+                error: "You cannot delete this post",
+            });
+        }
+
+        await prisma.post.delete({
+            where: {
+                id: postId,
+            },
+        });
+
+        res.status(204).send();
+    } catch(err) {
+        next(err);
+    }
+}

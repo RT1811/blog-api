@@ -76,3 +76,20 @@ export async function updatePost(id, updates, token) {
 
     return data;
 }
+
+export async function deletePost(id, token) {
+    const response = await fetch(
+        `http://localhost:3000/api/posts/${id}`,
+        {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to delete post");
+    }
+}

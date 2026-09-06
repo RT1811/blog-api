@@ -57,6 +57,17 @@ export default function EditPost() {
         }
     }
 
+    async function handleDelete() {
+        const token = localStorage.getItem("token");
+
+        try {
+            await deletePost(id, token);
+            navigate("/");
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -79,6 +90,7 @@ export default function EditPost() {
 
             <button type="submit">Save Changes</button>
             <button type="button" onClick={handlePublishToggle}>{published ? "Unpublish" : "Publish"}</button>
+            <button type="button" onClick={handleDelete}>Delete Post</button>
         </form>
     );
 }

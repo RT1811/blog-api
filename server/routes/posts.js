@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getPublishedPosts, getPublishedPostById, createPost, updatePost } from "../controllers/posts.js";
+import { getPublishedPosts, getPublishedPostById, createPost, updatePost, deletePost } from "../controllers/posts.js";
 import { authenticate } from "../middleware/authentication.js";
 import { body } from "express-validator";
 
@@ -43,5 +43,7 @@ router.get("/:id", getPublishedPostById);
 router.post("/", authenticate, createPostValidation, createPost);
 
 router.patch("/:id", authenticate, updatePostValidation, updatePost);
+
+router.delete("/:id", authenticate, deletePost);
 
 export default router;
