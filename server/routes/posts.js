@@ -23,4 +23,6 @@ router.get("/:id", getPublishedPostById);
 
 router.post("/", authenticate, postValidation, createPost);
 
+router.patch("/:id", authenticate, postValidation, updatePost);
+
 export default router;
