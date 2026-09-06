@@ -47,6 +47,8 @@ export default function Myposts() {
                     </p>
 
                     <p>{post.content}</p>
+
+                    <Link to={`/posts/${post.id}/edit`}>Edit</Link>
                 </article>
             ))}
         </main>

@@ -3,6 +3,7 @@ import Login from "./pages/Login.jsx";
 import MyPosts from "./pages/MyPosts.jsx";
 import NewPost from "./pages/NewPost.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import EditPost from "./pages/EditPost.jsx";
 
 function App() {
     return (
@@ -14,9 +15,14 @@ function App() {
                   </ProtectedRoute>
                 } />
                 <Route path="/posts/new" element={
-                    <ProtectedRoute>
-                      <NewPost />
-                    </ProtectedRoute>
+                  <ProtectedRoute>
+                    <NewPost />
+                  </ProtectedRoute>
+                } />
+                <Route path="posts/:id/edit" element={
+                  <ProtectedRoute>
+                    <EditPost />
+                  </ProtectedRoute>
                 } />
                 <Route path="/login" element={<Login />} />
             </Routes>
