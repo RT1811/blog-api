@@ -37,7 +37,7 @@ export async function logIn(username, password) {
 }
 
 export async function getMe(token) {
-    const response = await fetch('${API_URL}/api/auth/me', {
+    const response = await fetch(`${API_URL}/api/auth/me`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

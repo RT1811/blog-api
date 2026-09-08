@@ -38,7 +38,7 @@ export async function logIn(username, password) {
 }
 
 export async function deleteAccount(token) {
-    const response = await fetch('${API_URL}/api/me', {
+    const response = await fetch(`${API_URL}/api/me`, {
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${token}`,
