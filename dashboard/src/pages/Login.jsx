@@ -31,11 +31,24 @@ function Login() {
             <form className="auth-form" onSubmit={handleSubmit}>
                 <h1>Dashboard Login</h1>
 
-                {/* keep your existing labels/inputs/error handling */}
+                <label htmlFor="username">Username</label>
+                <input
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
 
-                <button type="submit">
-                    Log In
-                </button>
+                <label htmlFor="password">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <button type="submit">Log In</button>
+
+                {error && <p>{error}</p>}
             </form>
         </main>
     );

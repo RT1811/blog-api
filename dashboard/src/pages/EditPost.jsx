@@ -77,25 +77,41 @@ export default function EditPost() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
+        <main className="editor-page">
+            <form className="editor-form" onSubmit={handleSubmit}>
+                <h1>Edit Post</h1>
 
-            <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-            />
+                <label htmlFor="title">Title</label>
+                <input
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
 
-            <div className="editor-actions">
-                <button type="submit">Save Changes</button>
-                <button type="button" onClick={handlePublishToggle}>{published ? "Unpublish" : "Publish"}</button>
-            </div>
+                <label htmlFor="content">Content</label>
+                <textarea
+                    id="content"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                />
 
-            <div className="editor-danger">
-                <button type="button" onClick={handleDelete}>Delete Post</button>
-            </div>
-        </form>
+                <div className="editor-actions">
+                    <button type="submit">Save Changes</button>
+                    <button type="button" onClick={handlePublishToggle}>
+                        {published ? "Unpublish" : "Publish"}
+                    </button>
+                </div>
+
+                <div className="editor-danger">
+                    <button
+                        type="button"
+                        className="danger-button"
+                        onClick={handleDelete}
+                    >
+                        Delete Post
+                    </button>
+                </div>
+            </form>
+        </main>
     );
 }
