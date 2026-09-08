@@ -1,7 +1,7 @@
-const API_URL = "http://localhost:3000/api/auth";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export async function signUp(username, password) {
-    const response = await fetch(`${API_URL}/signup`, {
+    const response = await fetch(`${API_URL}/api/auth/signup`, {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -19,7 +19,7 @@ export async function signUp(username, password) {
 }
 
 export async function logIn(username, password) {
-    const response = await fetch(`${API_URL}/login`, {
+    const response = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export async function logIn(username, password) {
 }
 
 export async function getMe(token) {
-    const response = await fetch("http://localhost:3000/api/auth/me", {
+    const response = await fetch('${API_URL}/api/auth/me', {
         headers: {
             Authorization: `Bearer ${token}`,
         },

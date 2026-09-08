@@ -10,11 +10,15 @@ const app = express();
 
 app.use(express.json());
 
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    process.env.READER_URL,
+    process.env.DASHBOARD_URL,
+].filter(Boolean);
+
 app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "http://localhost:5174",
-    ],
+    origin: allowedOrigins,
 }));
 
 app.use("/api/auth", authRouter);

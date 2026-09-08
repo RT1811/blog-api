@@ -1,5 +1,7 @@
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
 export async function getMyPosts(token) {
-    const response = await fetch("http://localhost:3000/api/me/posts", {
+    const response = await fetch(`${API_URL}/api/me/posts`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -15,7 +17,7 @@ export async function getMyPosts(token) {
 }
 
 export async function createPost(title, content, token) {
-    const response = await fetch("http://localhost:3000/api/posts", {
+    const response = await fetch(`${API_URL}/api/posts`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -38,7 +40,7 @@ export async function createPost(title, content, token) {
 
 export async function getMyPost(id, token) {
     const response = await fetch(
-        `http://localhost:3000/api/me/posts/${id}`,
+        `${API_URL}/api/me/posts/${id}`,
         {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -57,7 +59,7 @@ export async function getMyPost(id, token) {
 
 export async function updatePost(id, updates, token) {
     const response = await fetch(
-        `http://localhost:3000/api/posts/${id}`,
+        `${API_URL}/api/posts/${id}`,
         {
             method: "PATCH",
             headers: {
@@ -79,7 +81,7 @@ export async function updatePost(id, updates, token) {
 
 export async function deletePost(id, token) {
     const response = await fetch(
-        `http://localhost:3000/api/posts/${id}`,
+        `${API_URL}/api/posts/${id}`,
         {
             method: "DELETE",
             headers: {
