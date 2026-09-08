@@ -55,7 +55,7 @@ export async function createComment(req, res, next) {
 
     if (!errors.isEmpty()) {
         return res.status(400).json({
-            errors: errors.array(),
+           error: errors.array()[0].msg,
         });
     }
 
@@ -110,7 +110,7 @@ export async function updateComment(req, res, next) {
 
     if (!errors.isEmpty()) {
         return res.status(400).json({
-            errors: errors.array(),
+           error: errors.array()[0].msg,
         });
     }
 

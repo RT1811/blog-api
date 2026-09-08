@@ -8,7 +8,6 @@ export default function Post() {
     const { user } = useContext(AuthContext);
 
     const [post, setPost] = useState(null);
-    const [error, setError] = useState("");
     const [comments, setComments] = useState([]);
     const [commentContent, setCommentContent] = useState("");
     const [editingCommentId, setEditingCommentId] = useState(null);
@@ -25,7 +24,7 @@ export default function Post() {
                 setPost(postData);
                 setComments(commentData);
             } catch(err) {
-                setError(err.message);
+                setLoadError(err.message);
             }
         }
 
@@ -34,6 +33,7 @@ export default function Post() {
 
     async function handleCommentSubmit(e) {
         e.preventDefault();
+        setCommentError("");
 
         const token = localStorage.getItem("token");
 
@@ -51,12 +51,13 @@ export default function Post() {
 
             setCommentContent("");
         } catch(err) {
-            setError(err.message);
+            setCommentError(err.message);
         }
     }
 
     async function handleDeleteComment(commentId) {
         const token = localStorage.getItem("token");
+        setCommentError("");
 
         try {
             await deleteComment(commentId, token);
@@ -67,12 +68,13 @@ export default function Post() {
                 )
             );
         } catch(err) {
-            setError(err.message);
+            setCommentError(err.message);
         }
     }
 
     async function handleEditComment(e, commentId) {
         e.preventDefault();
+        setCommentError("");
 
         const token = localStorage.getItem("token");
 
@@ -90,7 +92,7 @@ export default function Post() {
             setEditingCommentId(null);
             setEditContent("");
         } catch(err) {
-            setError(err.message);
+            setCommentError(err.message);
         }
     }
 
@@ -99,8 +101,8 @@ export default function Post() {
         setEditContent(comment.content);
     }
 
-    if (error) {
-    return <p>{error}</p>;
+    if (loadError) {
+        return <p>{loadError}</p>;
     }
 
     if (!post) {
@@ -123,6 +125,10 @@ export default function Post() {
 
             <section className="comments-section">
                 <h2>Comments</h2>
+
+                {commentError && (
+                    <p className="error-message">{commentError}</p>
+                )}
 
                 {user && (
                     <form
