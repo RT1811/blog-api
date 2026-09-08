@@ -58,7 +58,14 @@ main {
     text-decoration: underline;
 }
 
-.navbar span {
+.nav-left,
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.nav-right {
     margin-left: auto;
 }
 

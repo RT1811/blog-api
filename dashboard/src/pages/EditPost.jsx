@@ -58,6 +58,12 @@ export default function EditPost() {
     }
 
     async function handleDelete() {
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this post? This cannot be undone."
+        );
+
+        if (!confirmed) return;
+
         const token = localStorage.getItem("token");
 
         try {

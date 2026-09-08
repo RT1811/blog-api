@@ -38,11 +38,16 @@ export default function Myposts() {
     }
 
     async function handleDeleteAccount() {
+        const confirmed = window.confirm(
+            "Are you sure you want to delete your account? This cannot be undone."
+        );
+
+        if (!confirmed) return;
+
         const token = localStorage.getItem("token");
 
         try {
             await deleteAccount(token);
-
             localStorage.removeItem("token");
             setUser(null);
             navigate("/login");
