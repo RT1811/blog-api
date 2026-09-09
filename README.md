@@ -335,6 +335,7 @@ By default the Dashboard runs on:
 
 ```text
 http://localhost:5174
+```
 
 The Dashboard runs separately from the Reader and communicates with the same API.
 
