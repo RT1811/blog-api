@@ -12,7 +12,7 @@ Built as part of [The Odin Project](https://www.theodinproject.com/) NodeJS curr
 
 ## Live Demo
 
-- **Reader:** [Live Reader](https://blog-api-git-main-rt-1811.vercel.app/)
+- **Reader:** [Live Reader](https://blog-api-one-lyart.vercel.app/)
 - **Author Dashboard:** [Live Dashboard](https://blog-api-dashboard-self.vercel.app/)
 
 > Accounts created through the Reader can also be used to sign into the Dashboard.
