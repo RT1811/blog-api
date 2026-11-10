@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: bloguser
+      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: blogdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+  server:
+    build: ./server
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://bloguser:devpassword@db:5432/blogdb?schema=public"
+      PORT: "3000"
+      JWT_SECRET: "${JWT_SECRET:?Set JWT_SECRET}"
+      READER_URL: "http://localhost:5173"
+      DASHBOARD_URL: "http://localhost:5174"
+    depends_on:
+      - db
+  reader:
+    build: ./reader
+    ports:
+      - "127.0.0.1:5173:80"
+    depends_on:
+      - server
+  dashboard:
+    build: ./dashboard
+    ports:
+      - "127.0.0.1:5174:80"
+    depends_on:
+      - server
+
+volumes:
+  postgres_data:
